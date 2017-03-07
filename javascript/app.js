@@ -11,7 +11,7 @@
 
   var datum = firebase.database();
 
-  $("#trainSearch").on("click", function(){
+  $("#trainSearch").on("click", function() {
 
   	var eachTrain = $("#trainName").val().trim();
   	var location = $("#destination").val().trim();
@@ -24,7 +24,7 @@
   		destination: location,
   		time: firstTrainTime,
   		frequency: eachFrequency
-  	}
+  	};
 
   	datum.ref().push(trainObject);
 
@@ -39,4 +39,24 @@
   	$("#trainFrequency").val("");
 
   	return false;
-  })
+
+  });
+
+  datum.ref().on("child_added", function(newChild, lastChild) {
+
+  	console.log(newChild.val());
+
+  	var checkName = newChild.val().name;
+  	var checkDestination = newChild.val().destination;
+  	var checkTime = newChild.val().time;
+  	var checkFrequency = newChild.val().frequency;
+
+  	var timeDifference = moment().diff(moment.unix(checkTime), "minutes");
+  	var timeRemainder = timeDifference % checkFrequency;
+  	var minutesAway = checkFrequency - timeRemainder;
+
+  	var nextArrival = moment().add(minutesAway, "m").format("hh:mm A");
+
+  	$("#trainSchedule > tbody").append("<tr><td>" + checkName + "</td><td>" + checkDestination + "</td><td>" + checkFrequency + "</td><td>" + nextArrival + "</td><td>" + minutesAway "</td><tr>");
+
+  });
