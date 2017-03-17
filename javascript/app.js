@@ -57,6 +57,6 @@
     //adding current time to how many minutes away the next train is
   	var nextArrival = moment().add(minutesAway, "m").format("hh:mm A");
     // appending all the data to the table
-  	$("#trainSchedule > tbody").append("<tr><td>" + checkName + "</td><td>" + checkDestination + "</td><td>" + checkFrequency + "</td><td>" + nextArrival + "</td><td>" + minutesAway "</td><tr>");
+  	$("#trainSchedule > tbody").append("<tr><td>" + checkName + "</td><td>" + checkDestination + "</td><td>" + checkFrequency + "</td><td>" + nextArrival + "</td><td>" + minutesAway + "</td><tr>");
 
   });
